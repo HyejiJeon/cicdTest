@@ -1,0 +1,28 @@
+default_platform(:ios)
+platform :ios do    
+      desc "Incrementing Build Number"
+      lane :increment_build do
+           current_build_number = latest_testflight_build_number(
+		username: "jcrescent61@gmail.com",
+		app_identifier: "ellen.test.cicdTest"
+		)
+           increment_build_number(
+           build_number: current_build_number + 1
+           )
+      end
+ 
+      desc “Archive and Build IPA”
+      lane :tf do
+	cocoapods(
+		clean: true,
+		use_bundle_exec: false
+		)
+       increment_build
+       build_app(
+             scheme: "cicdTest",
+             output_directory: "./fastlane/Distribute",
+             clean: true
+		)
+       upload_to_testflight
+       end
+end
