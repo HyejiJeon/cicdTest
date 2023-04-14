@@ -17,5 +17,5 @@ jobs:
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
       run: |
-        curl -X POST ${JENKINS_BASE_URL}/job/${JENKINS_GITHUB_ACTION_JOB_NAME}/build \
-             --user ${JENKINS_USER_NAME}:${JENKINS_TOKEN}
+        curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build \
+             --user ${JENKINS_USER}:${JENKINS_TOKEN}
