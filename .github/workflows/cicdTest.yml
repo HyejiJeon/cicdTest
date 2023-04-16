@@ -8,6 +8,8 @@ jobs:
     runs-on: [ self-hosted, macOS ]
 
     steps:
+    - name: Set branch name as environment variable
+      run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
     - name: Run Jenkins Job
       env:
         JENKINS_URL: ${{secrets.JENKINS_BASE_URL}}
@@ -18,5 +20,5 @@ jobs:
        curl -X POST \
           -H "Content-Type: application/json" \
           -d '{"parameter": [{"name": "BRANCH_NAME", "value": "'$BRANCH_NAME'"}]}' \
-              ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build \
+              ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=$CURRENT_BRANCH"
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
