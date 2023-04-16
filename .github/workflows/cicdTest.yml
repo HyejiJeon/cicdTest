@@ -15,8 +15,7 @@ jobs:
         JENKINS_USER: ${{ secrets.JENKINS_USER_NAME }}
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
-  
+        BRANCH_NAME: ${{ github.head_ref }}
       run: | 
-       echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
        curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=$BRANCH_NAME"
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
