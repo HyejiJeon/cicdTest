@@ -17,10 +17,10 @@ jobs:
     - name: Display branch name
       run: |
         echo "Branch name: $BRANCH_NAME"
-        echo ${JENKINS_URL}/${JENKINS_PATH}/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME} \
-               --user ${JENKINS_USER}:${JENKINS_TOKEN}
+        echo "${JENKINS_URL}/${JENKINS_PATH}/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME}" \
+               --user "${JENKINS_USER}:${JENKINS_TOKEN}"
         
     - name: Run Jenkins Job
       run: | 
-       curl -X POST ${JENKINS_URL}/${JENKINS_PATH}/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME} \
-               --user ${JENKINS_USER}:${JENKINS_TOKEN}
+       curl -X POST "${JENKINS_URL}/${JENKINS_PATH}/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME}" \
+               --user "${JENKINS_USER}:${JENKINS_TOKEN}"
