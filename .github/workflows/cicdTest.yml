@@ -1,14 +1,7 @@
 name: Trigger Jenkins Job
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - develop
-    types:
-      - closed
+  workflow_dispatch:
 
 jobs:
   trigger_jenkins_job:
@@ -22,5 +15,8 @@ jobs:
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
       run: |
-        curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build \
-             --user ${JENKINS_USER}:${JENKINS_TOKEN}
+       curl -X POST \
+          -H "Content-Type: application/json" \
+          -d '{"parameter": [{"name": "BRANCH_NAME", "value": "'$BRANCH_NAME'"}]}' \
+              ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build \
+               --user ${JENKINS_USER}:${JENKINS_TOKEN}
