@@ -21,5 +21,5 @@ jobs:
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
         BRANCH_NAME: ${{ github.event.inputs.branch }}
       run: | 
-       curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=$BRANCH_NAME"
+       curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME}"
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
