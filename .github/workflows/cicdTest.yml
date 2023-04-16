@@ -8,7 +8,6 @@ jobs:
     runs-on: [ self-hosted, macOS ]
 
     steps:
-    - name: Set branch name as environment variable
      
     - name: Run Jenkins Job
       env:
