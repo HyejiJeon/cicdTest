@@ -2,6 +2,10 @@ name: Trigger Jenkins Job
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to use'
+        required: true
 
 jobs:
   trigger_jenkins_job:
@@ -15,7 +19,7 @@ jobs:
         JENKINS_USER: ${{ secrets.JENKINS_USER_NAME }}
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
-        BRANCH_NAME: ${{ github.head_ref }}
+        BRANCH_NAME: ${{ github.event.inputs.branch }}
       run: | 
        curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=$BRANCH_NAME"
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
