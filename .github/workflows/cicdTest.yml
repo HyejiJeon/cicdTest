@@ -18,8 +18,5 @@ jobs:
   
       run: | 
        echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-       curl -X POST \
-          -H "Content-Type: application/json" \
-          -d '{"parameter": [{"name": "BRANCH_NAME", "value": "'$BRANCH_NAME'"}]}' \
-              ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/build
+       curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=$BRANCH_NAME"
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
