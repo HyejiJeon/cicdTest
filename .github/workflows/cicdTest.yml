@@ -2,24 +2,24 @@ name: Trigger Jenkins Job
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to use'
-        required: true
-
+  
 jobs:
   trigger_jenkins_job:
     runs-on: [ self-hosted, macOS ]
-
-    steps:
-     
-    - name: Run Jenkins Job
-      env:
+    env:
         JENKINS_URL: ${{secrets.JENKINS_BASE_URL}}
         JENKINS_USER: ${{ secrets.JENKINS_USER_NAME }}
         JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         JENKINS_JOB_NAME: ${{ secrets.JENKINS_GITHUB_ACTION_JOB_NAME }}
-        BRANCH_NAME: ${{ github.event.inputs.branch }}
+        BRANCH_NAME: ${{ github.ref_name }}
+    steps:
+    - name: Display branch name
+      run: |
+        echo "Branch name: $BRANCH_NAME"
+        echo ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME}
+               --user ${JENKINS_USER}:${JENKINS_TOKEN}
+        
+    - name: Run Jenkins Job
       run: | 
        curl -X POST ${JENKINS_URL}/job/${JENKINS_JOB_NAME}/buildWithParameters?BRANCH_NAME=${BRANCH_NAME}
                --user ${JENKINS_USER}:${JENKINS_TOKEN}
